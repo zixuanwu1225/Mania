@@ -6,9 +6,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainGUI {
+    private JFrame frame = buildFrame();
     public MainGUI() throws IOException {
-        JFrame frame = buildFrame();
-        JPanel panel = new NewPanel();
+
+        NewPanel panel = new NewPanel();
         frame.add(panel);
         frame.setVisible(true);
 
@@ -28,5 +29,9 @@ public class MainGUI {
         g2d.drawImage(temp,0,0,null);
         g2d.dispose();
         return dimg;
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }
