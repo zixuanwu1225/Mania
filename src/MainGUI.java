@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,7 @@ public class MainGUI {
 
         NewPanel panel = new NewPanel();
         frame.add(panel);
-        frame.setVisible(true);
+        frame.setVisible(true); 
 
     }
     public static JFrame buildFrame(){

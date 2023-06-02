@@ -76,7 +76,6 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
         new Thread( () -> {
 
             while(newY!=1080){
-
                 newY+=20;
                 try {
                     Thread.sleep(30);
@@ -125,14 +124,29 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
 
     }
 
+    public void setNewY(int newY) {
+        this.newY = newY;
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         char key = e.getKeyChar();
-        if(e.getExtendedKeyCode() ==  KeyEvent.VK_F/*&&image1.getMinY()<300*/){
+        switch(e.getKeyCode()/*&&image1.getMinY()<300*/){
+            case KeyEvent.VK_F:
             chance = (int)(Math.random()*4)+1;
             repaint();
             newY=0;
             System.out.println("f");
+            break;
+            case KeyEvent.VK_D:
+                chance = (int)(Math.random()*4)+1;
+                repaint();
+                newY=0;
+                System.out.println("d");
+                break;
+            default:
+                System.out.println("no");
+                break;
         }
     }
 
