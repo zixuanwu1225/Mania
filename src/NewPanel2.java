@@ -9,9 +9,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.security.Key;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class NewPanel extends JPanel implements ActionListener, KeyListener {
+public class NewPanel2 extends JPanel implements ActionListener, KeyListener {
 
     private BufferedImage image1;
     private BufferedImage image2;
@@ -24,7 +26,7 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
     private int newY = 0;
     private int chance = (int)(Math.random()*4)+1;
 
-    public NewPanel() throws IOException {
+    public NewPanel2() throws IOException {
         //addKeyListener(this);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
@@ -38,27 +40,6 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
         //try creating new thread + new method that draws another image
         new Thread( () -> {
 
-            while(newY!=1080){
-                newY+=20;
-                try {
-                    Thread.sleep(30);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                repaint();
-                //make listener so that when the right key is pressed, will delete the image and send out another one.
-                //also make it so that Thread.sleep decreases as time passes
-                //when correct key is clicked at the right time, change chance
-                //OPTIONAL:make it so that multiple images will appear on the same lane
-            }
-            //make code to say you failed
-        }).start();
-        new Thread( () -> {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             while(newY!=1080){
                 newY+=20;
                 try {
@@ -118,7 +99,7 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
         switch(e.getKeyCode()/*&&image1.getMinY()<300*/){
             case KeyEvent.VK_F:
                 if(newY>600) returnToTop();
-            break;
+                break;
             case KeyEvent.VK_D:
                 if(newY>600)returnToTop();
                 break;

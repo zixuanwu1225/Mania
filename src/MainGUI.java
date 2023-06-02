@@ -11,8 +11,11 @@ public class MainGUI {
     public MainGUI() throws IOException {
 
         NewPanel panel = new NewPanel();
+        NewPanel2 panel2 = new NewPanel2();
         frame.add(panel);
+        frame.add(panel2);
         frame.addKeyListener(panel);
+        frame.addKeyListener(panel2);
         frame.setVisible(true);
 
     }
