@@ -16,11 +16,15 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
     private BufferedImage image2;
     private BufferedImage image3;
     private BufferedImage image4;
+    private BufferedImage image12 = ImageIO.read(new File("src/Down-removebg-preview.png"));
+    private BufferedImage image23 = ImageIO.read(new File("src/Left.png"));
+    private BufferedImage image34 = ImageIO.read(new File("src/Up.png"));
+    private BufferedImage image45 = ImageIO.read(new File("src/Right.png"));
     private int newY = 0;
     private int chance = (int)(Math.random()*4)+1;
 
     public NewPanel() throws IOException {
-        addKeyListener(this);
+        //addKeyListener(this);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         image1 = ImageIO.read(new File("src/Down-removebg-preview.png"));
@@ -28,49 +32,7 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
         image3 = ImageIO.read(new File("src/Up.png"));
         image4 = ImageIO.read(new File("src/Right.png"));
         repaint();
-        /*new Thread( () -> {
-            for(int i = 0;i<10000;i++){
-                int chance = (int)(Math.random()*4)+1;
-                if(chance==1){
-                    newY = newY+20;
-                    newY3 = newY3+20;
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else if(chance==2){
-                    newY1 = newY1+20;
-                    newY2 = newY2+20;
-                    newY3 = newY3+20;
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else if(chance==3){
-                    newY = newY+20;
-                    newY2 = newY2+20;
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else if(chance==4){
-                    newY1 = newY1+20;
-                    newY2 = newY2+20;
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                repaint();
-            }
-        }).start();*/
+
 
         //try creating new thread + new method that draws another image
         new Thread( () -> {
@@ -104,16 +66,16 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
         g2.drawImage(image3, 260, 0, 100, 100, null);
         g2.drawImage(image4, 380, 0, 100, 100, null);
         if(chance==1){
-            g2.drawImage(image1, 20, newY, 100, 100, null);
+            g2.drawImage(image12, 20, newY, 100, 100, null);
         }
         else if(chance==2){
-            g2.drawImage(image2, 140, newY, 100, 100, null);
+            g2.drawImage(image23, 140, newY, 100, 100, null);
         }
         else if(chance==3){
-            g2.drawImage(image3, 260, newY, 100, 100, null);
+            g2.drawImage(image34, 260, newY, 100, 100, null);
         }
         else if(chance==4){
-            g2.drawImage(image4, 380, newY, 100, 100, null);
+            g2.drawImage(image45, 380, newY, 100, 100, null);
         }
     }
     public void actionPerformed(ActionEvent e) {
@@ -130,22 +92,21 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        char key = e.getKeyChar();
+
         switch(e.getKeyCode()/*&&image1.getMinY()<300*/){
             case KeyEvent.VK_F:
-            chance = (int)(Math.random()*4)+1;
-            repaint();
-            newY=0;
-            System.out.println("f");
+                if(newY>500) returnToTop();
             break;
             case KeyEvent.VK_D:
-                chance = (int)(Math.random()*4)+1;
-                repaint();
-                newY=0;
-                System.out.println("d");
+                if(newY>500)returnToTop();
+                break;
+            case KeyEvent.VK_J:
+                if(newY>500)returnToTop();
+                break;
+            case KeyEvent.VK_K:
+                if(newY>500)returnToTop();
                 break;
             default:
-                System.out.println("no");
                 break;
         }
     }
@@ -153,5 +114,10 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    public void returnToTop(){
+        chance = (int)(Math.random()*4)+1;
+        repaint();
+        newY=0;
     }
 }
