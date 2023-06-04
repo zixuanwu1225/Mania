@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.security.Key;
-import java.util.concurrent.TimeUnit;
 
 public class NewPanel extends JPanel implements ActionListener, KeyListener {
 
@@ -21,7 +20,9 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
     private BufferedImage image23 = ImageIO.read(new File("src/Left.png"));
     private BufferedImage image34 = ImageIO.read(new File("src/Up.png"));
     private BufferedImage image45 = ImageIO.read(new File("src/Right.png"));
+    private int milli = 30;
     private int newY = 0;
+    private boolean cooldown = false;
     private int chance = (int)(Math.random()*4)+1;
 
     public NewPanel() throws IOException {
@@ -41,7 +42,7 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
             while(newY!=1080){
                 newY+=20;
                 try {
-                    Thread.sleep(30);
+                    Thread.sleep(milli);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -54,26 +55,16 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
             //make code to say you failed
         }).start();
         new Thread( () -> {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            while(newY!=1080){
-                newY+=20;
+            if(cooldown){
                 try {
-                    Thread.sleep(30);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                repaint();
-                //make listener so that when the right key is pressed, will delete the image and send out another one.
-                //also make it so that Thread.sleep decreases as time passes
-                //when correct key is clicked at the right time, change chance
-                //OPTIONAL:make it so that multiple images will appear on the same lane
+                cooldown=false;
             }
-            //make code to say you failed
         }).start();
+
     }
 
     public void paintComponent(Graphics g) {
@@ -117,16 +108,24 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
 
         switch(e.getKeyCode()/*&&image1.getMinY()<300*/){
             case KeyEvent.VK_F:
-                if(newY>600) returnToTop();
-            break;
+                if(newY>500) returnToTop();
+                break;
             case KeyEvent.VK_D:
-                if(newY>600)returnToTop();
+                if(newY>500)returnToTop();
                 break;
             case KeyEvent.VK_J:
-                if(newY>600)returnToTop();
+                if(newY>500)returnToTop();
                 break;
             case KeyEvent.VK_K:
-                if(newY>600)returnToTop();
+                if(newY>500)returnToTop();
+                break;
+            case KeyEvent.VK_SPACE:
+                if(cooldown){
+                    //make warning saying that it is on cooldown
+                }
+                else{
+                    slowDown();
+                }
                 break;
             default:
                 break;
@@ -141,5 +140,11 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
         chance = (int)(Math.random()*4)+1;
         repaint();
         newY=0;
+        milli-=1;
+    }
+    public void slowDown(){
+        milli+=10;
+        cooldown = true;
     }
 }
+
