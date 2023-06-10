@@ -14,7 +14,6 @@ public class MainGUI {
         frame.add(panel);
         frame.addKeyListener(panel);
         frame.setVisible(true);
-
     }
     public static JFrame buildFrame(){
         JFrame frame = new JFrame();

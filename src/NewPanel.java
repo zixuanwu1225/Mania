@@ -21,6 +21,8 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
     private BufferedImage image34 = ImageIO.read(new File("src/Up.png"));
     private BufferedImage image45 = ImageIO.read(new File("src/Right.png"));
     private int milli = 30;
+    private int score = 0;
+    private int highScore=0;
     private int newY = 0;
     private boolean cooldown = false;
     private int chance = (int)(Math.random()*4)+1;
@@ -51,6 +53,12 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
                 //also make it so that Thread.sleep decreases as time passes
                 //when correct key is clicked at the right time, change chance
                 //OPTIONAL:make it so that multiple images will appear on the same lane
+            }
+            Leaderboard l = new Leaderboard();
+            try {
+                l.addList();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
             //make code to say you failed
         }).start();
@@ -99,6 +107,14 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
 
     }
 
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
     public void setNewY(int newY) {
         this.newY = newY;
     }
@@ -108,16 +124,28 @@ public class NewPanel extends JPanel implements ActionListener, KeyListener {
 
         switch(e.getKeyCode()/*&&image1.getMinY()<300*/){
             case KeyEvent.VK_F:
-                if(newY>500) returnToTop();
+                if(newY>500){
+                    returnToTop();
+                    score++;
+                }
                 break;
             case KeyEvent.VK_D:
-                if(newY>500)returnToTop();
+                if(newY>500){
+                    returnToTop();
+                    score++;
+                }
                 break;
             case KeyEvent.VK_J:
-                if(newY>500)returnToTop();
+                if(newY>500){
+                    returnToTop();
+                    score++;
+                }
                 break;
             case KeyEvent.VK_K:
-                if(newY>500)returnToTop();
+                if(newY>500){
+                    returnToTop();
+                    score++;
+                }
                 break;
             case KeyEvent.VK_SPACE:
                 if(cooldown){

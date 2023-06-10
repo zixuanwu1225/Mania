@@ -1,14 +1,19 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MenuPanel extends JPanel implements ActionListener {
-    private JTextArea text;
-    private JButton start;
-    private JButton quit;
+    private JTextArea text = new JTextArea();
+    private JButton start = new JButton();
+    private JButton leaderboard = new JButton();
 
     public MenuPanel(){
-        text.setLocation(500,500);
+        text.setLocation(850,250);
+        text.setText("Mania!");
+        text.add(start);
+        start.addActionListener(this);
+        this.setVisible(true);
     }
 
     @Override
@@ -17,10 +22,14 @@ public class MenuPanel extends JPanel implements ActionListener {
         JButton button = (JButton)src;
         String text = button.getText();
         if(text.equals("Start")){
-            //call NewPanel class
+            try {
+                MainGUI m =new MainGUI();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
-        if(text.equals("Quit")){
-            //use the exit call thing
+        if(text.equals("Leaderboard")){
+            Leaderboard l =new Leaderboard();
         }
         //make sure to add the listener somewhere idk
     }
