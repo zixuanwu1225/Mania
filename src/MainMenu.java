@@ -32,11 +32,13 @@ public class MainMenu extends JFrame implements ActionListener {
         JButton button = (JButton)src;
         String text = button.getText();
         if(text.equals("Start")){
-            try {
-                MainGUI m = new MainGUI();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            new Thread( () -> {
+                try {
+                    MainGUI m = new MainGUI();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }).start();
         }
         if(text.equals("Leaderboard")){
             Leaderboard l =new Leaderboard();
